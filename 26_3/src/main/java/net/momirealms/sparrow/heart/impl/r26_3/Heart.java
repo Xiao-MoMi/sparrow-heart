@@ -34,6 +34,7 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
@@ -238,7 +239,7 @@ public class Heart extends SparrowHeart {
     @Override
     public void swingHand(Player player, HandSlot slot) {
         ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
-        ClientboundAnimatePacket packet = new ClientboundAnimatePacket(serverPlayer, slot.getId());
+        ClientboundSwingAnimationPacket packet = new ClientboundSwingAnimationPacket(serverPlayer, slot == HandSlot.MAIN ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, SwingAnimation.DEFAULT);
         serverPlayer.connection.send(packet);
         ChunkMap.TrackedEntity tracker = serverPlayer.moonrise$getTrackedEntity();
         for (ServerPlayerConnection connection : tracker.seenBy) {
